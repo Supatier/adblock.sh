@@ -206,7 +206,7 @@ update_blocklist()
     wget -qO- "https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt" | sed -e '/^\|\|/! s/.*//; /\^$/! s/.*//; s/\^$//g; /[\.]/! s/.*//; s/^[\|]\{1,2\}//g' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
     wget -qO- "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
     wget -qO- "http://www.hostsfile.org/Downloads/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -qO- "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/abpindo_adservers.txt" | sed 's/..//' | sed 's/.............$//' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -qO- "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/abpindo_adservers.txt" | sed 's/..//' | sed 's/.............$//' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
 
 
     #Add black list, if non-empty
