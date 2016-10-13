@@ -191,23 +191,23 @@ update_blocklist()
 	#wget -qO- "https://raw.githubusercontent.com/boutetnico/url-shorteners/master/list.txt" > /etc/white.list
     echo 'Downloading hosts lists...'
     #Download and process the files needed to make the lists (enable/add more, if you want)
-    wget -O- "https://adaway.org/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' > /tmp/block.build.list
-    wget -O- "http://www.mvps.org/winhelp2002/hosts.txt"| awk -v r="$ENDPOINT_IP4" '{sub(/^0.0.0.0/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/win10/spy.txt"| awk -v r="$ENDPOINT_IP4" '{sub(/^0.0.0.0/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "https://www.malwaredomainlist.com/hostslist/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "http://hosts-file.net/ad_servers.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist"| sed -r 's/[[:space:]]|[\[!#/:;_].*|[0-9\.]*localhost.*//g; s/[\^#/:;_\.\t ]*$//g' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "http://someonewhocares.org/hosts/hosts" |awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "https://raw.githubusercontent.com/Dawsey21/Lists/master/main-blacklist.txt" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "https://openphish.com/feed.txt" | sed -e 's|^[^/]*//||' -e 's|/.*$||' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "https://mirror.cedia.org.ec/malwaredomains/justdomains" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "https://feodotracker.abuse.ch/blocklist/?download=ipblocklist" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "https://www.dshield.org/feeds/suspiciousdomains_Low.txt" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt" | sed -e '/^\|\|/! s/.*//; /\^$/! s/.*//; s/\^$//g; /[\.]/! s/.*//; s/^[\|]\{1,2\}//g' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "http://www.hostsfile.org/Downloads/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/abpindo_adservers.txt" | sed 's/..//' | sed 's/.............$//' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://adaway.org/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' > /tmp/block.build.list
+    wget -O- -t 10  "http://www.mvps.org/winhelp2002/hosts.txt"| awk -v r="$ENDPOINT_IP4" '{sub(/^0.0.0.0/, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/win10/spy.txt"| awk -v r="$ENDPOINT_IP4" '{sub(/^0.0.0.0/, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://www.malwaredomainlist.com/hostslist/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "http://hosts-file.net/ad_servers.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist"| sed -r 's/[[:space:]]|[\[!#/:;_].*|[0-9\.]*localhost.*//g; s/[\^#/:;_\.\t ]*$//g' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "http://someonewhocares.org/hosts/hosts" |awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://raw.githubusercontent.com/Dawsey21/Lists/master/main-blacklist.txt" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://openphish.com/feed.txt" | sed -e 's|^[^/]*//||' -e 's|/.*$||' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://mirror.cedia.org.ec/malwaredomains/justdomains" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://feodotracker.abuse.ch/blocklist/?download=ipblocklist" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://www.dshield.org/feeds/suspiciousdomains_Low.txt" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt" | sed -e '/^\|\|/! s/.*//; /\^$/! s/.*//; s/\^$//g; /[\.]/! s/.*//; s/^[\|]\{1,2\}//g' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "http://www.hostsfile.org/Downloads/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/abpindo_adservers.txt" | sed 's/..//' | sed 's/.............$//' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
 
 
     #Add black list, if non-empty
