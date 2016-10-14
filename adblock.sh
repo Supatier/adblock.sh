@@ -7,6 +7,8 @@
 # Only block wireless ads? Y/N
 ONLY_WIRELESS="N"
 
+TMPDIR=/root
+
 # IPv6 support? Y/N
 IPV6="N"
 
@@ -37,8 +39,8 @@ cleanup()
 {
     #Delete files used to build list to free up the limited space
     echo 'Cleaning up...'
-    rm -f /tmp/block.build.list
-    rm -f /tmp/block.build.before
+    rm -f $TMPDIR/block.build.list
+    rm -f $TMPDIR/block.build.before
 }
 
 install_dependencies()
@@ -191,36 +193,36 @@ update_blocklist()
 	#wget -qO- "https://raw.githubusercontent.com/boutetnico/url-shorteners/master/list.txt" > /etc/white.list
     echo 'Downloading hosts lists...'
     #Download and process the files needed to make the lists (enable/add more, if you want)
-    wget -O- -t 10  "https://adaway.org/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' > /tmp/block.build.list
-    wget -O- -t 10  "http://www.mvps.org/winhelp2002/hosts.txt"| awk -v r="$ENDPOINT_IP4" '{sub(/^0.0.0.0/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/win10/spy.txt"| awk -v r="$ENDPOINT_IP4" '{sub(/^0.0.0.0/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "https://www.malwaredomainlist.com/hostslist/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "http://hosts-file.net/ad_servers.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist"| sed -r 's/[[:space:]]|[\[!#/:;_].*|[0-9\.]*localhost.*//g; s/[\^#/:;_\.\t ]*$//g' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "http://someonewhocares.org/hosts/hosts" |awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "https://raw.githubusercontent.com/Dawsey21/Lists/master/main-blacklist.txt" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "https://openphish.com/feed.txt" | sed -e 's|^[^/]*//||' -e 's|/.*$||' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "https://mirror.cedia.org.ec/malwaredomains/justdomains" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "https://feodotracker.abuse.ch/blocklist/?download=ipblocklist" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "https://www.dshield.org/feeds/suspiciousdomains_Low.txt" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt" | sed -e '/^\|\|/! s/.*//; /\^$/! s/.*//; s/\^$//g; /[\.]/! s/.*//; s/^[\|]\{1,2\}//g' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "http://www.hostsfile.org/Downloads/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> /tmp/block.build.list
-    wget -O- -t 10  "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/abpindo_adservers.txt" | sed 's/..//' | sed 's/.............$//' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> /tmp/block.build.list
+    wget -O- -t 10  "https://adaway.org/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' > $TMPDIR/block.build.list
+    wget -O- -t 10  "http://www.mvps.org/winhelp2002/hosts.txt"| awk -v r="$ENDPOINT_IP4" '{sub(/^0.0.0.0/, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/win10/spy.txt"| awk -v r="$ENDPOINT_IP4" '{sub(/^0.0.0.0/, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "https://www.malwaredomainlist.com/hostslist/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "http://hosts-file.net/ad_servers.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist"| sed -r 's/[[:space:]]|[\[!#/:;_].*|[0-9\.]*localhost.*//g; s/[\^#/:;_\.\t ]*$//g' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "http://someonewhocares.org/hosts/hosts" |awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "https://raw.githubusercontent.com/Dawsey21/Lists/master/main-blacklist.txt" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "https://openphish.com/feed.txt" | sed -e 's|^[^/]*//||' -e 's|/.*$||' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "https://mirror.cedia.org.ec/malwaredomains/justdomains" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "https://feodotracker.abuse.ch/blocklist/?download=ipblocklist" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "https://www.dshield.org/feeds/suspiciousdomains_Low.txt" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt" | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt" | sed -e '/^\|\|/! s/.*//; /\^$/! s/.*//; s/\^$//g; /[\.]/! s/.*//; s/^[\|]\{1,2\}//g' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "http://www.hostsfile.org/Downloads/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
+    wget -O- -t 10  "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/abpindo_adservers.txt" | sed 's/..//' | sed 's/.............$//' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
 
 
     #Add black list, if non-empty
     if [ -s "/etc/black.list" ]
     then
         echo 'Adding blacklist...'
-        awk -v r="$ENDPOINT_IP4" '/^[^#]/ { print r,$1 }' /etc/black.list >> /tmp/block.build.list
+        awk -v r="$ENDPOINT_IP4" '/^[^#]/ { print r,$1 }' /etc/black.list >> $TMPDIR/block.build.list
     fi
 
     echo 'Sorting lists...'
 
     #Sort the download/black lists
-    awk '{sub(/\r$/,"");print $1,$2}' /tmp/block.build.list|sort -u | sed 's/0.0.0.0 */0.0.0.0 /g' | sed 's/0.0.0.0 @@||*/0.0.0.0 /g' |sed 's/\/\///g' | sed '/0.0.0.0 #/d' | sed '/0.0.0.0 :/d' | sed -e '1d'  > /tmp/block.build.before
+    awk '{sub(/\r$/,"");print $1,$2}' $TMPDIR/block.build.list|sort -u | sed 's/0.0.0.0 */0.0.0.0 /g' | sed 's/0.0.0.0 @@||*/0.0.0.0 /g' |sed 's/\/\///g' | sed '/0.0.0.0 #/d' | sed '/0.0.0.0 :/d' | sed -e '1d'  > $TMPDIR/block.build.before
 
     #Filter (if applicable)
     if [ -s "/etc/white.list" ]
@@ -228,9 +230,9 @@ update_blocklist()
         #Filter the blacklist, suppressing whitelist matches
         #  This is relatively slow =-(
         echo 'Filtering white list...'
-        egrep -v "^[[:space:]]*$" /etc/white.list | awk '/^[^#]/ {sub(/\r$/,"");print $1}' | grep -vf - /tmp/block.build.before > /etc/block.hosts
+        egrep -v "^[[:space:]]*$" /etc/white.list | awk '/^[^#]/ {sub(/\r$/,"");print $1}' | grep -vf - $TMPDIR/block.build.before > /etc/block.hosts
     else
-        cat /tmp/block.build.before > /etc/block.hosts
+        cat $TMPDIR/block.build.before > /etc/block.hosts
     fi
 
     if [ "$IPV6" = "Y" ]
