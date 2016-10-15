@@ -7,7 +7,7 @@
 # Only block wireless ads? Y/N
 ONLY_WIRELESS="N"
 
-TMPDIR=/root
+TMPDIR="/tmp"
 
 # IPv6 support? Y/N
 IPV6="N"
