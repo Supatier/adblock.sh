@@ -210,8 +210,7 @@ update_blocklist()
     wget -O- -t 10  "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
     wget -O- -t 10  "http://www.hostsfile.org/Downloads/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
     wget -O- -t 10  "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/abpindo_adservers.txt" | sed 's/..//' | sed 's/.............$//' | awk -v r="$ENDPOINT_IP4" '{sub(//, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
-
-
+    wget -O- -t 10  "https://gist.githubusercontent.com/Maysora/25dca985de1ed6d8eb4c95081d54667b/raw/369929e39531cdac8661df1f8bf430a76ef4e73d/hosts"| awk -v r="$ENDPOINT_IP4" '{sub(/^0.0.0.0/, r)} $0 ~ "^"r' >> $TMPDIR/block.build.list
     #Add black list, if non-empty
     if [ -s "/etc/black.list" ]
     then
