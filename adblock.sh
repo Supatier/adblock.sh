@@ -190,7 +190,7 @@ update_blocklist()
         fi
     fi
 
-	#wget -qO- "https://raw.githubusercontent.com/boutetnico/url-shorteners/master/list.txt" > /etc/white.list
+    #wget -qO- "https://raw.githubusercontent.com/boutetnico/url-shorteners/master/list.txt" > /etc/white.list
     echo 'Downloading hosts lists...'
     #Download and process the files needed to make the lists (enable/add more, if you want)
     wget -O- -t 10  "https://adaway.org/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' > $TMPDIR/block.build.list
