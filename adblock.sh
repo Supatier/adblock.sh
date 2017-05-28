@@ -29,7 +29,7 @@ ENDPOINT_IP4="0.0.0.0"
 ENDPOINT_IP6="::"
 
 #Change the cron command to what is comfortable, or leave as is
-CRON="0 4 * * 0,3 sh /etc/adblock.sh"
+CRON= "0 1 * * * sh /etc/adblock.sh \n0 2 * * * [ -s /etc/block.hosts ] || sh /etc/adblock.sh"
 
 #### END CONFIG ####
 
@@ -175,6 +175,13 @@ add_config()
     fi
 }
 
+add_whitelist()
+{
+    echo 'Downloading white lists...'
+    [ -s /etc/white.list ] ||
+    wget -qO- "https://raw.githubusercontent.com/boutetnico/url-shorteners/master/list.txt" > /etc/white.list
+    }
+
 update_blocklist()
 {
     #Delete the old block.hosts to make room for the updates
@@ -189,8 +196,6 @@ update_blocklist()
             ENDPOINT_IP6=$(uci get network.lan6.ipaddr)
         fi
     fi
-
-    #wget -qO- "https://raw.githubusercontent.com/boutetnico/url-shorteners/master/list.txt" > /etc/white.list
     echo 'Downloading hosts lists...'
     #Download and process the files needed to make the lists (enable/add more, if you want)
     wget -O- -t 10  "https://adaway.org/hosts.txt"|awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r' > $TMPDIR/block.build.list
@@ -341,6 +346,7 @@ case "$1" in
     "-f")
         install_dependencies
         add_config
+        add_whitelist
         update_blocklist
         restart_firewall
         restart_dnsmasq 1
@@ -353,6 +359,7 @@ case "$1" in
         remove_config
         install_dependencies
         add_config
+        add_whitelist
         update_blocklist
         restart_firewall
         restart_dnsmasq 1
@@ -362,6 +369,7 @@ case "$1" in
         ;;
     #Default updates blocklist only
     *)
+        add_whitelist
         update_blocklist
         restart_dnsmasq 0
         cleanup
