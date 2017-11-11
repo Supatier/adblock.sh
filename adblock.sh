@@ -29,33 +29,33 @@ ENDPOINT_IP4="0.0.0.0 "
 ENDPOINT_IP6="::"
 
 #Change the cron command to what is comfortable, or leave as is
-CRON= "0 1 * * * sh /etc/adblock.sh \n0 2 * * * [ -s /etc/block.hosts ] || sh /etc/adblock.sh"
+CRON="0 1 * * * sh /etc/adblock.sh \n0 2 * * * [ -s /etc/block.hosts ] || sh /etc/adblock.sh"
 
 #types
 
 #Remove Empty Newlines
-RMENL "sed '/^\s*$/d'"
+RMENL="sed '/^\s*$/d'"
 
 #Starts with 127.0.0.1
-FT127 = "awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r'"
+FT127="awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r'"
 
 #Starts with 0.0.0.0
-FT0 = "awk -v r="$ENDPOINT_IP4" '{sub(/^0.0.0.0/, r)} $0 ~ "^"r'"
+FT0="awk -v r="$ENDPOINT_IP4" '{sub(/^0.0.0.0/, r)} $0 ~ "^"r'"
 
 #Is Raw
-ISRAW = "awk -v r="$ENDPOINT_IP4 " '{sub(/^/, r)} $0 ~ "^"r'"
+ISRAW="awk -v r="$ENDPOINT_IP4 " '{sub(/^/, r)} $0 ~ "^"r'"
 
 #Has comments '#' and is a raw eg: 'www.google.com'
-FTR = "sed -r 's/[[:space:]]|[\[!#/:;_].*|[0-9\.]*localhost.*//g; s/[\^#/:;_\.\t ]*$//g' | $ISRAW"
+FTR="sed -r 's/[[:space:]]|[\[!#/:;_].*|[0-9\.]*localhost.*//g; s/[\^#/:;_\.\t ]*$//g' | $ISRAW"
 
 #Has directories
-FTWD = "sed -e 's|^[^/]*//||' -e 's|/.*$||' | $ISRAW"
+FTWD="sed -e 's|^[^/]*//||' -e 's|/.*$||' | $ISRAW"
 
 #adblock plus
-FTABP = "sed -e '/^\|\|/! s/.*//; /\^$/! s/.*//; s/\^$//g; /[\.]/! s/.*//; s/^[\|]\{1,2\}//g' | $RMENL | awk '{gsub("ws*:\/\/*", "");print}' | awk '{gsub("@@\|\|", "");print}' | $ISRAW"
+FTABP="sed -e '/^\|\|/! s/.*//; /\^$/! s/.*//; s/\^$//g; /[\.]/! s/.*//; s/^[\|]\{1,2\}//g' | $RMENL | awk '{gsub("ws*:\/\/*", "");print}' | awk '{gsub("@@\|\|", "");print}' | $ISRAW"
 
 #ABP Rules
-FTABPR = "sed 's/..//' | sed 's/.............$//' | awk '{gsub("^\$popu", "");print}' | awk '{gsub("^\$domain", "");print}' | $ISRAW"
+FTABPR="sed 's/..//' | sed 's/.............$//' | awk '{gsub("^\$popu", "");print}' | awk '{gsub("^\$domain", "");print}' | $ISRAW"
 
 #### END CONFIG ####
 
