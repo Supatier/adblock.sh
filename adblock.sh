@@ -37,13 +37,13 @@ CRON="0 1 * * * sh /etc/adblock.sh \n0 2 * * * [ -s /etc/block.hosts ] || sh /et
 RMENL="sed '/^\s*$/d'"
 
 #Starts with 127.0.0.1
-FT127="awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1/, r)} $0 ~ "^"r'"
+FT127="awk -v r="$ENDPOINT_IP4" '{sub(/^127.0.0.1 /, r)} $0 ~ "^"r'"
 
 #Starts with 0.0.0.0
-FT0="awk -v r="$ENDPOINT_IP4" '{sub(/^0.0.0.0/, r)} $0 ~ "^"r'"
+FT0="awk -v r="$ENDPOINT_IP4" '{sub(/^0.0.0.0 /, r)} $0 ~ "^"r'"
 
 #Is Raw
-ISRAW="awk -v r="$ENDPOINT_IP4 " '{sub(/^/, r)} $0 ~ "^"r'"
+ISRAW="awk -v r="$ENDPOINT_IP4" '{sub(/^/, r)} $0 ~ "^"r'"
 
 #Has comments '#' and is a raw eg: 'www.google.com'
 FTR="sed -r 's/[[:space:]]|[\[!#/:;_].*|[0-9\.]*localhost.*//g; s/[\^#/:;_\.\t ]*$//g' | $ISRAW"
