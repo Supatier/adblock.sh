@@ -224,24 +224,24 @@ update_blocklist()
     fi
     echo 'Downloading hosts lists...'
     #Download and process the files needed to make the lists (enable/add more, if you want)
-    wget -O- -t 10  "https://adaway.org/hosts.txt"|$FT127 > $TMPDIR/block.build.list
-    wget -O- -t 10  "http://www.mvps.org/winhelp2002/hosts.txt" | $FT0 >> $TMPDIR/block.build.list
-    wget -O- -t 10  "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/win10/spy.txt"| $FT0 >> $TMPDIR/block.build.list
-    wget -O- -t 10  "https://www.malwaredomainlist.com/hostslist/hosts.txt" | $FT127 >> $TMPDIR/block.build.list
-    wget -O- -t 10  "http://hosts-file.net/ad_servers.txt" | $FT127 >> $TMPDIR/block.build.list
-    wget -O- -t 10  "https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist" | $FTR >> $TMPDIR/block.build.list
-    wget -O- -t 10  "http://someonewhocares.org/hosts/hosts" | $FT127 >> $TMPDIR/block.build.list
-    wget -O- -t 10  "https://raw.githubusercontent.com/Dawsey21/Lists/master/main-blacklist.txt" | $FTR >> $TMPDIR/block.build.list
-    wget -O- -t 10  "https://openphish.com/feed.txt" | $FTWD >> $TMPDIR/block.build.list
-    wget -O- -t 10  "https://mirror.cedia.org.ec/malwaredomains/justdomains" | $FTR >> $TMPDIR/block.build.list
-    wget -O- -t 10  "https://feodotracker.abuse.ch/blocklist/?download=ipblocklist" | $FTR >> $TMPDIR/block.build.list
-    wget -O- -t 10  "https://www.dshield.org/feeds/suspiciousdomains_Low.txt" | $FTR >> $TMPDIR/block.build.list
-    wget -O- -t 10  "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt" | tail +2 | $FTR >> $TMPDIR/block.build.list
-    wget -O- -t 10  "https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt" | $FTABP >> $TMPDIR/block.build.list
-    wget -O- -t 10  "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext" | $FT127 >> $TMPDIR/block.build.list
-    wget -O- -t 10  "http://www.hostsfile.org/Downloads/hosts.txt" | $FT127 >> $TMPDIR/block.build.list
-    wget -O- -t 10  "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/abpindo_adservers.txt" |  >> $TMPDIR/block.build.list
-    wget -O- -t 10  "https://gist.githubusercontent.com/Maysora/25dca985de1ed6d8eb4c95081d54667b/raw/369929e39531cdac8661df1f8bf430a76ef4e73d/hosts"| $FT0 >> $TMPDIR/block.build.list
+    curl  "https://adaway.org/hosts.txt"|$FT127 > $TMPDIR/block.build.list
+    curl  "http://www.mvps.org/winhelp2002/hosts.txt" | $FT0 >> $TMPDIR/block.build.list
+    curl  "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/win10/spy.txt"| $FT0 >> $TMPDIR/block.build.list
+    curl  "https://www.malwaredomainlist.com/hostslist/hosts.txt" | $FT127 >> $TMPDIR/block.build.list
+    curl  "http://hosts-file.net/ad_servers.txt" | $FT127 >> $TMPDIR/block.build.list
+    curl  "https://zeustracker.abuse.ch/blocklist.php?download=domainblocklist" | $FTR >> $TMPDIR/block.build.list
+    curl  "http://someonewhocares.org/hosts/hosts" | $FT127 >> $TMPDIR/block.build.list
+    curl  "https://raw.githubusercontent.com/Dawsey21/Lists/master/main-blacklist.txt" | $FTR >> $TMPDIR/block.build.list
+    curl  "https://openphish.com/feed.txt" | $FTWD >> $TMPDIR/block.build.list
+    curl  "https://mirror.cedia.org.ec/malwaredomains/justdomains" | $FTR >> $TMPDIR/block.build.list
+    curl  "https://feodotracker.abuse.ch/blocklist/?download=ipblocklist" | $FTR >> $TMPDIR/block.build.list
+    curl  "https://www.dshield.org/feeds/suspiciousdomains_Low.txt" | $FTR >> $TMPDIR/block.build.list
+    curl  "https://s3.amazonaws.com/lists.disconnect.me/simple_malvertising.txt" | tail +2 | $FTR >> $TMPDIR/block.build.list
+    curl  "https://easylist-downloads.adblockplus.org/ruadlist+easylist.txt" | $FTABP >> $TMPDIR/block.build.list
+    curl  "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext" | $FT127 >> $TMPDIR/block.build.list
+    curl  "http://www.hostsfile.org/Downloads/hosts.txt" | $FT127 >> $TMPDIR/block.build.list
+    curl  "https://raw.githubusercontent.com/ABPindo/indonesianadblockrules/master/abpindo_adservers.txt" |  >> $TMPDIR/block.build.list
+    curl  "https://gist.githubusercontent.com/Maysora/25dca985de1ed6d8eb4c95081d54667b/raw/369929e39531cdac8661df1f8bf430a76ef4e73d/hosts"| $FT0 >> $TMPDIR/block.build.list
     #Add black list, if non-empty
     if [ -s "/etc/black.list" ]
     then
