@@ -224,7 +224,7 @@ update_blocklist()
     fi
     echo 'Downloading hosts lists...'
     #Download and process the files needed to make the lists (enable/add more, if you want)
-    wget -O- -t 10  "https://adaway.org/hosts.txt" | $FT127 > $TMPDIR/block.build.list
+    wget -O- -t 10  "https://adaway.org/hosts.txt"|$FT127 > $TMPDIR/block.build.list
     wget -O- -t 10  "http://www.mvps.org/winhelp2002/hosts.txt" | $FT0 >> $TMPDIR/block.build.list
     wget -O- -t 10  "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/win10/spy.txt"| $FT0 >> $TMPDIR/block.build.list
     wget -O- -t 10  "https://www.malwaredomainlist.com/hostslist/hosts.txt" | $FT127 >> $TMPDIR/block.build.list
